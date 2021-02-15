@@ -6,7 +6,7 @@ import Header from './component/header/header'
 import Signinandsignup from './pages/signin-and-signup/signin-and-signup'
 
 import {Route,Switch} from 'react-router-dom'
-import {auth} from './firebase/firebase.utils'
+import {auth,createUserProfile} from './firebase/firebase.utils'
 
 class  App extends React.Component {
   constructor(){
@@ -17,8 +17,9 @@ class  App extends React.Component {
   }
 unsubscribefromauth=null
 componentDidMount(){
-  this.unsubscribefromauth=auth.onAuthStateChanged((user)=>{
-    this.setState({currentUser:user})
+  this.unsubscribefromauth=auth.onAuthStateChanged(async(user)=>{
+    /* after google signin user object passing to createUserProfile() to store data in data base*/ 
+    createUserProfile(user)
   })
 
 }
